@@ -1,12 +1,13 @@
 const albumRouter = require('express').Router();
+const albumController = require('../controllers/album.controller');
 
 albumRouter.route('/')
-    .get(() => {})
-    .post(() => {})
+    .get(albumController.getAll)
+    .post(albumController.create)
 
 albumRouter.route('/:id')
-    .get(() => {})
-    .put(() => {})
-    .delete(() => {})
+    .get(albumController.getById)
+    .put(albumController.update)
+    .delete(albumController.delete)
 
 module.exports = albumRouter;

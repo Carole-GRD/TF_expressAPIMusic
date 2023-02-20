@@ -49,4 +49,4 @@ const artistController = {
     }
 }
 
-module.export = artistController;
+module.exports = artistController;
