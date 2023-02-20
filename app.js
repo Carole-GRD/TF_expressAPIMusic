@@ -19,7 +19,8 @@ const app = express();
 
 
 // Router
-
+const router = require('./routes');
+app.use('/api', router);
 
 // Ecoute serveur
 app.listen(process.env.PORT, () => {
