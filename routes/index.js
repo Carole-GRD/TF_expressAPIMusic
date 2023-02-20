@@ -7,7 +7,7 @@ const router = require('express').Router();
 
 // Définition des diff"rentes routes 'parents'  et lien avec fichiers routing 'enfants'
 router.use( '/genre', genreRouter );
-router.use('/ artist', artistRouter );
+router.use('/artist', artistRouter );
 router.use('/track', trackRouter );
 router.use('/album', albumRouter );
 
