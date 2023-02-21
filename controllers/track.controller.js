@@ -43,7 +43,7 @@ const trackController = {
         // res.sendStatus(501);
 
         const data = req.body;
-        const track = trackService.create(data);
+        const track = await trackService.create(data);
         res.location('/track/' + track.id);
         res.status(201).json(new SuccessResponse(track, 201));
     },

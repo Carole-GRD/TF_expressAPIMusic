@@ -37,10 +37,10 @@ const albumController = {
      * @param { Request } req
      * @param { Response } res
      */
-    create : (req, res) => {
+    create : async (req, res) => {
         // res.sendStatus(501);
         const data = req.body;
-        const album = albumService.create(data);
+        const album = await albumService.create(data);
         res.location('/album/' + album.id);
         res.status(201).json(new SuccessResponse(album, 201));
     },
