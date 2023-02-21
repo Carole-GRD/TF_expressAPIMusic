@@ -78,3 +78,6 @@ ExpressAPIMusic
 - Connection  db + synchro dans app.js
 
 ## Création des services et genre controller
+
+## Ajout de l'utils SuccessResponse et SuccessArrayResponse
+- Permet d'envoyer comme response, le resultat, le count (si tableau) et le status

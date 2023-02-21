@@ -4,11 +4,19 @@ const db = require('../models');
 const genreService = {
     getAll : async () => {
         // Récupération des genres, tels qu'ils sont en db
-        const genres = await db.Genre.findAll();
+        // const genres = await db.Genre.findAll();
+        // Avec la méthode findAndCountAll, on obtiendraun object avec les lignes (rows) et le count (toutes les lignes de la table)
+        const { rows, count } = await db.Genre.findAndCountAll({
+            distinct: true,
+        });
 
         // Transformation en GenreDTO
         // return genres.map(genre => new GenreDTO(genre.id, genre.name));
-        return genres.map(genre => new GenreDTO(genre));
+        // return genres.map(genre => new GenreDTO(genre));
+        return {
+            genres : rows.map(genre => new GenreDTO(genre)),
+            count
+        }
     },
 
     getById : async (id) => {

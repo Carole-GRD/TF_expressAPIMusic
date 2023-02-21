@@ -1,5 +1,6 @@
 const { Request, Response } = require('express');
 const genreService = require('../services/genre.service');
+const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
 
 const genreController = {
 
@@ -13,8 +14,10 @@ const genreController = {
         // res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
 
         // Récupération des genres, format DTO (grâce au service)
-        const genres = await genreService.getAll();
-        res.status(200).json(genres);
+        // const genres = await genreService.getAll();
+        // res.status(200).json(genres);
+        const { genres, count } = await genreService.getAll();
+        res.status(200).json(new SuccessArrayResponse(genres, count));
     },
 
     /** 
@@ -35,7 +38,8 @@ const genreController = {
             return;
         }
         // Si on a bien récupérer un genre
-        res.status(200).json(genre);
+        // res.status(200).json(genre);
+        res.status(200).json(new SuccessResponse(genre));
 
     },
 
@@ -58,7 +62,8 @@ const genreController = {
         res.location('/genre/' + genre.id)
 
         // 201 - Created
-        res.status(201).json(genre);
+        // res.status(201).json(genre);
+        res.status(201).json(new SuccessResponse(genre, 201));
     },
 
     /** 
