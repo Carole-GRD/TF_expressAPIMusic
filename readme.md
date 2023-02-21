@@ -68,3 +68,4 @@ ExpressAPIMusic
 
 ## Création de la DB sur SSMS + Attribution des droits à notre User (voir login -> Carole)
 
+## Ajouter dans le .env les infos DB
