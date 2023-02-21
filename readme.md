@@ -76,3 +76,5 @@ ExpressAPIMusic
 - Nouvelle arborescence
 
 - Connection  db + synchro dans app.js
+
+## Création des services et genre controller
