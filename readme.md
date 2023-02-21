@@ -69,3 +69,10 @@ ExpressAPIMusic
 ## Création de la DB sur SSMS + Attribution des droits à notre User (voir login -> Carole)
 
 ## Ajouter dans le .env les infos DB
+
+## Setup DB
+- Création du index.js avec instance de sequelize et objet db + liaison modèle + relations
+- Creation de tous les modèles
+- Nouvelle arborescence
+
+- Connection  db + synchro dans app.js

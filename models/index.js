@@ -41,10 +41,8 @@ db.Album.belongsToMany(db.Track, { through : 'MM_Album_Track' });
 
 // (Many to Many avec attribut)
 // Comme on a un attribut en plus, on crée un model, on l'associe à db dans le lien, plutôt que de mettre un nom pour la table intermédiaire, on met notre modèle
-db.Track.belongsToMany(Artist, { trough : db.MM_Artist_Track});
-db.Artist.belongsToMany(Track, { trough : db.MM_Artist_Track});
-
-
+db.Track.belongsToMany(db.Artist, { through : db.MM_Artist_Track});
+db.Artist.belongsToMany(db.Track, { through : db.MM_Artist_Track});
 
 
 // export de db
