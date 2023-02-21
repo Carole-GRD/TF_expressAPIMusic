@@ -5,7 +5,7 @@ const genreService = {
     getAll : async () => {
         // Récupération des genres, tels qu'ils sont en db
         // const genres = await db.Genre.findAll();
-        // Avec la méthode findAndCountAll, on obtiendraun object avec les lignes (rows) et le count (toutes les lignes de la table)
+        // Avec la méthode findAndCountAll, on obtiendra un object avec les lignes (rows) et le count (toutes les lignes de la table)
         const { rows, count } = await db.Genre.findAndCountAll({
             distinct: true,
         });

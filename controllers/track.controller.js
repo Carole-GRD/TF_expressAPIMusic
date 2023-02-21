@@ -1,4 +1,6 @@
 const { Request, Response } = require('express');
+const trackService = require('../services/track.service')
+const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
 
 const trackController = {
 
@@ -8,8 +10,11 @@ const trackController = {
      * @param { Request } req
      * @param { Response } res
      */
-    getAll : (req, res) => {
-        res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
+    getAll : async (req, res) => {
+        // res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
+        
+        const { tracks, count } = await trackService.getAll();
+        res.status(200).json(new SuccessArrayResponse(tracks, count));
     },
 
     /** 
@@ -17,8 +22,16 @@ const trackController = {
      * @param { Request } req
      * @param { Response } res
      */
-    getById : (req, res) => {
-        res.sendStatus(501);
+    getById : async (req, res) => {
+        // res.sendStatus(501);
+
+        const { id } = req.params;
+        const track = await trackService.getById(id);
+        if (!track) {
+            res.sendStatus(404);
+            return;
+        }
+        res.status(200).json(new SuccessResponse(track));
     },
 
     /** 
@@ -26,8 +39,13 @@ const trackController = {
      * @param { Request } req
      * @param { Response } res
      */
-    create : (req, res) => {
-        res.sendStatus(501);
+    create : async (req, res) => {
+        // res.sendStatus(501);
+
+        const data = req.body;
+        const track = trackService.create(data);
+        res.location('.track/' + track.id);
+        res.status(201).json(new SuccessResponse(track, 201));
     },
 
     /** 
@@ -35,8 +53,20 @@ const trackController = {
      * @param { Request } req
      * @param { Response } res
      */
-    update : (req, res) => {
-        res.sendStatus(501);
+    update : async (req, res) => {
+        // res.sendStatus(501);
+
+        const { id } = req.params;
+        const data = req.body;
+
+        const isUpdated = await trackService.update(id, data);
+
+        if (!isUpdated) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.sendStatus(204);
     },
 
     /** 
@@ -44,8 +74,17 @@ const trackController = {
      * @param { Request } req
      * @param { Response } res
      */
-    delete : (req, res) => {
-        res.sendStatus(501);
+    delete : async (req, res) => {
+        // res.sendStatus(501);
+
+        const { id } = req.params;
+        const isDeleted = await trackService.delete(id);
+
+        if (!isDeleted) {
+            res.sendStatus(404);
+            return;
+        }
+        res.sendStatus(204);
     }
 }
 

@@ -58,7 +58,7 @@ const genreController = {
 
         const genre = await genreService.create(data);
 
-        // Onva allermodifier la response, pour ajouter le lien vers la requête sur le genre qui vient d'être crée (getById)
+        // Onva aller modifier la response, pour ajouter le lien vers la requête sur le genre qui vient d'être crée (getById)
         res.location('/genre/' + genre.id)
 
         // 201 - Created
