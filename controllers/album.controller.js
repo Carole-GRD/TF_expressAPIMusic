@@ -1,4 +1,6 @@
 const { Request, Response } = require('express');
+const albumService = require('../services/album.service')
+const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
 
 const albumController = {
 
@@ -8,8 +10,10 @@ const albumController = {
      * @param { Request } req
      * @param { Response } res
      */
-    getAll : (req, res) => {
-        res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
+    getAll : async (req, res) => {
+        // res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
+        const { albums, count } = await albumService.getAll();
+        res.status(200).json(new SuccessArrayResponse(albums, count));
     },
 
     /** 
@@ -17,8 +21,15 @@ const albumController = {
      * @param { Request } req
      * @param { Response } res
      */
-    getById : (req, res) => {
-        res.sendStatus(501);
+    getById : async (req, res) => {
+        // res.sendStatus(501);
+        const { id } = req.params;
+        const album = await albumService.getById(id);
+        if (!album) {
+            res.sendStatus(404);
+            return;
+        }
+        res.status(200).json(new SuccessResponse(album));
     },
 
     /** 
@@ -27,7 +38,11 @@ const albumController = {
      * @param { Response } res
      */
     create : (req, res) => {
-        res.sendStatus(501);
+        // res.sendStatus(501);
+        const data = req.body;
+        const album = albumService.create(data);
+        res.location('/album/' + album.id);
+        res.status(201).json(new SuccessResponse(album, 201));
     },
 
     /** 
@@ -35,8 +50,19 @@ const albumController = {
      * @param { Request } req
      * @param { Response } res
      */
-    update : (req, res) => {
-        res.sendStatus(501);
+    update : async (req, res) => {
+        // res.sendStatus(501);
+        const { id } = req.params;
+        const data = req.body;
+
+        const isUpdated = await albumService.update(id, data);
+
+        if (!isUpdated) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.sendStatus(204);
     },
 
     /** 
@@ -44,8 +70,16 @@ const albumController = {
      * @param { Request } req
      * @param { Response } res
      */
-    delete : (req, res) => {
-        res.sendStatus(501);
+    delete : async (req, res) => {
+        // res.sendStatus(501);
+        const { id } = req.params;
+        const isDeleted = await albumService.delete(id);
+
+        if (!isDeleted) {
+            res.sendStatus(404);
+            return;
+        }
+        res.sendStatus(204);
     }
 }
 
