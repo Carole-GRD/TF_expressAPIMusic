@@ -1,5 +1,6 @@
 const genreRouter = require('express').Router();
-const genreController = require('../controllers/genre.controller')
+const genreController = require('../controllers/genre.controller');
+const pagination = require('../middlewares/pagination.middleware');
 
 // genreRouter.get('/', () => {})
 // genreRouter.get('/:id', () => {})
@@ -7,8 +8,10 @@ const genreController = require('../controllers/genre.controller')
 // genreRouter.put('/:id', () => {})
 // genreRouter.delete('/:id', () => {});
 
+
+// pour utiliser un middleware (route, middlewares, controller)
 genreRouter.route('/')
-    .get(genreController.getAll)
+    .get(pagination( { defaultLimit : 30, maxLimit : 200 } ), genreController.getAll)
     .post(genreController.create)
 
 genreRouter.route('/:id')

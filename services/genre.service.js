@@ -2,12 +2,14 @@ const { GenreDTO } = require('../dto/genre.dto');
 const db = require('../models');
 
 const genreService = {
-    getAll : async () => {
+    getAll : async (offset, limit) => {
         // Récupération des genres, tels qu'ils sont en db
         // const genres = await db.Genre.findAll();
         // Avec la méthode findAndCountAll, on obtiendra un object avec les lignes (rows) et le count (toutes les lignes de la table)
         const { rows, count } = await db.Genre.findAndCountAll({
             distinct: true,
+            offset : offset,   // offset : 12  ou  offset : offset  ->  simplifié en offset
+            limit : limit
         });
 
         // Transformation en GenreDTO

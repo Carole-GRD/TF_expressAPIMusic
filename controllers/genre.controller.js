@@ -13,10 +13,25 @@ const genreController = {
     getAll :async (req, res) => {
         // res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
 
+        // AVANT middleware pagination
+        // ------
+        // // Récupération dans la query, des propriétés limit et offset
+        // console.log(req.query);
+        // const offset = req.query.offset || 0;   
+        // // Si offset n'a pas été fourni (undefined), si c'est une chaine vide, si c'est null, on prendra la valeur 0, sinon on prend la valeur de offset
+        // const limit = req.query.limit || 50;
+
+
+        // AVEC middleware pagination
+        // ------
+        // on récupère les propriétés offset et limit présentes dans pagination ajouté à la requête par notre middleware
+        const { offset, limit } = req.pagination;
+
+        
         // Récupération des genres, format DTO (grâce au service)
         // const genres = await genreService.getAll();
         // res.status(200).json(genres);
-        const { genres, count } = await genreService.getAll();
+        const { genres, count } = await genreService.getAll(offset, limit);
         res.status(200).json(new SuccessArrayResponse(genres, count));
     },
 
