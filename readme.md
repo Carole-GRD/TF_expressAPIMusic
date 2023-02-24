@@ -85,3 +85,8 @@ ExpressAPIMusic
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
 https://dev.to/this-is-angular/nullish-coalescing-support-in-angular-template-48h6
+
+
+## Ajout d'une pagination
+- Dans un controller (pour comprendre comment ça fonctionne)
+- Mise en place d'un middleware pour la pagination 
