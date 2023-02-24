@@ -2,9 +2,11 @@ const { ArtistDTO } = require('../dto/artist.dto');
 const db = require('../models');
 
 const artistService = {
-    getAll: async () => {
+    getAll: async (offset, limit) => {
         const { rows, count } = await db.Artist.findAndCountAll({
-            distinct: true
+            distinct: true,
+            offset,  
+            limit
         });
         return {
             artists : rows.map(artist => new ArtistDTO(artist)),

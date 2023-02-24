@@ -2,12 +2,14 @@ const { TrackDTO } = require('../dto/track.dto');
 const db = require('../models');
 
 const trackService = {
-    getAll : async () => {
+    getAll : async (offset, limit) => {
         // const tracks = await db.Track.findAll();
         // return tracks.map(track => new TrackDTO(track));
 
         const { rows, count } = await db.Track.findAndCountAll({
             distinct :true,
+            offset,  
+            limit
             // TODO rajout genre
             // TODO rajout albums
             // TODO rajout artists

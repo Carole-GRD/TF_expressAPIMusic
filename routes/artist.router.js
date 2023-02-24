@@ -1,8 +1,9 @@
 const artistRouter = require('express').Router();
 const artistController = require('../controllers/artist.controller');
+const pagination = require('../middlewares/pagination.middleware');
 
 artistRouter.route('/')
-    .get(artistController.getAll)
+    .get(pagination( { defaultLimit : 25 } ), artistController.getAll)
     .post(artistController.create)
 
 artistRouter.route('/:id')

@@ -12,7 +12,10 @@ const albumController = {
      */
     getAll : async (req, res) => {
         // res.sendStatus(501);   // 501 : Not Implemented (La route existe mais ne renvoie pas encore de résultat, elle est en cours de construction)
-        const { albums, count } = await albumService.getAll();
+        
+        const { offset, limit } = req.pagination;
+        
+        const { albums, count } = await albumService.getAll(offset, limit);
         res.status(200).json(new SuccessArrayResponse(albums, count));
     },
 

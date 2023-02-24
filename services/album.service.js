@@ -2,11 +2,15 @@ const { AlbumDTO } = require('../dto/album.dto');
 const db = require('../models');
 
 const albumService = {
-    getAll : async () => {
+    getAll : async (offset, limit) => {
         // const tracks = await db.Track.findAll();
         // return tracks.map(track => new TrackDTO(track));
 
-        const { rows, count } = await db.Album.findAndCountAll();
+        const { rows, count } = await db.Album.findAndCountAll({
+            distinct: true,
+            offset,  
+            limit
+        });
         return {
             albums : rows.map(album => new AlbumDTO(album)),
             count
