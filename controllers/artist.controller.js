@@ -43,7 +43,7 @@ const artistController = {
         const data = req.body;
         const artist = await artistService.create(data);
         res.location('/artist/' + artist.id);
-        res.status(200).json(new SuccessResponse(artist, 201));
+        res.status(201).json(new SuccessResponse(artist, 201));
     },
 
     /** 

@@ -81,3 +81,7 @@ ExpressAPIMusic
 
 ## Ajout de l'utils SuccessResponse et SuccessArrayResponse
 - Permet d'envoyer comme response, le resultat, le count (si tableau) et le status
+
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
+https://dev.to/this-is-angular/nullish-coalescing-support-in-angular-template-48h6
