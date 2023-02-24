@@ -75,9 +75,12 @@ ExpressAPIMusic
 - Creation de tous les modèles
 - Nouvelle arborescence
 
-- Connection  db + synchro dans app.js
+- Connection db dans app.js   +   synchro dans  models/index.js 
+https://sequelize.org/docs/v6/core-concepts/assocs/
+
 
 ## Création des services et genre controller
+
 
 ## Ajout de l'utils SuccessResponse et SuccessArrayResponse
 - Permet d'envoyer comme response, le resultat, le count (si tableau) et le status
