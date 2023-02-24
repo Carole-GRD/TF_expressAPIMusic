@@ -2,11 +2,11 @@ const { UserDTO } = require('../dto/user.dto');
 const db = require('../models');
 
 const userService = {
-    getAll : async (/*offset, limit*/) => {
+    getAll : async (offset, limit) => {
         const { rows, count } = await db.User.findAndCountAll({
             distinct : true,
-            /*offset,
-            limit*/
+            offset,
+            limit
         });
         return {
             users : rows.map(user => new UserDTO(user)),
@@ -24,7 +24,7 @@ const userService = {
         return user ? new UserDTO(user) : null;
     },
 
-    update : async (userToUpdate) => {
+    update : async (id, userToUpdate) => {
         const updatedRow = await db.User.update(userToUpdate, {
             where : { id }
         });

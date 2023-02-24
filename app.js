@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'developement') {
     // db.sequelize.sync({ force : true });
     // ↑ supprime les tables et recrée tout à chaque sync
     
-    // db.sequelize.sync({ alter : { drop : false } });
+    db.sequelize.sync({ alter : { drop : false } });
     // ↑ regarde l'état actuel de la db, ajoute ce qui peut-être ajouté, modifie les colonnes, suppression de colonnes et/ou tables interdites
 }
 

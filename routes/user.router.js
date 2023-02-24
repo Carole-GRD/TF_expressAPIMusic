@@ -1,10 +1,10 @@
 const userRouter = require('express').Router();
 const userController = require('../controllers/user.controller');
-// const pagination = require('../middlewares/pagination.middleware');
+const pagination = require('../middlewares/pagination.middleware');
 
 
 userRouter.route('/')
-    .get(/*pagination(), */userController.getAll)
+    .get(pagination(), userController.getAll)
     .post(userController.create)
 
 userRouter.route('/:id')
