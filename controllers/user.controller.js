@@ -1,9 +1,11 @@
 const { Request, Response } = require('express');
 const userService = require('../services/user.service');
 const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
-// ------------------
+// ---------------------------------------------------
+// A SUPPRIMER -> VOIR AUTHENTICATION
+// -------------------------------
 const argon2 = require('argon2');
-// ------------------
+// ---------------------------------------------------
 
 const userController = {
     /**
@@ -37,51 +39,6 @@ const userController = {
             return;
         }
         res.status(200).json(new SuccessResponse(user));
-    },
-
-    /**
-     * Create
-     * @param { Request } req
-     * @param { Response } res
-     */
-    create : async (req, res) => {
-        // const data = req.body;
-        // const user = await userService.create(data);
-        // res.location('/user/' + user.id);
-        // res.status(201).json(new SuccessResponse(user, 201));
-
-
-        
-        
-        try {
-            const { firstname, lastname, email, password } = req.body;
-            console.log(password);
-
-            const hashPassword = await argon2.hash(password);
-            console.log(hashPassword);
-            
-            if (!hashPassword) {
-                res.sendStatus(404);
-                return;
-            }
-            
-            const data = { 
-                firstname, 
-                lastname, 
-                email, 
-                password : hashPassword 
-            };
-
-            const user = await userService.create(data);
-            res.location('/user/' + user.id);
-            res.status(201).json(new SuccessResponse(user, 201));
-        }
-        catch(err) {
-            console.log('err pwd : ');
-        }
-
-        
-
     },
 
     /**

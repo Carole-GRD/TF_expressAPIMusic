@@ -19,11 +19,6 @@ const userService = {
         return user ? new UserDTO(user) : null;
     },
 
-    create : async (userToAdd) => {
-        const user = await db.User.create(userToAdd);
-        return user ? new UserDTO(user) : null;
-    },
-
     update : async (id, userToUpdate) => {
         const updatedRow = await db.User.update(userToUpdate, {
             where : { id }

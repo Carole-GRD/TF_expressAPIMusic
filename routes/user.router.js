@@ -5,7 +5,7 @@ const pagination = require('../middlewares/pagination.middleware');
 
 userRouter.route('/')
     .get(pagination(), userController.getAll)
-    .post(userController.create)
+
 
 userRouter.route('/:id')
     .get(userController.getById)

@@ -19,7 +19,7 @@
 (en une commande :  npm i express express-async-errors dotenv sequelize tedious)
  ajouter --save ???
 
-## Créer lefichier gitignore
+## Créer le fichier gitignore
 - ignorer node_modules + fichiers env
 - si extension gitignore installée -> Ctrl + Maj + P (F1) -> add gitignore -> Node
 
@@ -93,3 +93,24 @@ https://dev.to/this-is-angular/nullish-coalescing-support-in-angular-template-48
 ## Ajout d'une pagination
 - Dans un controller (pour comprendre comment ça fonctionne)
 - Mise en place d'un middleware pour la pagination 
+
+
+## Mise en place User
+- Création model et lien Many to Many
+- Création service + DTO 
+- Création UserController (GetAll, GetById, Update, Delete) et AuthController (Register, Login)
+- Création routes
+- Hashage Password et Verif Password au login (npm i argon2)
+
+
+## Rework des Tracks 
+
+### Insertion
+- Rajouter le genre
+- Rajouter les albums qui lui sont liés
+- Rajouter les artistes qui lui sont liés (en featuring ou pas)
+
+### Récupération
+- Rajouter le genre sur les tracks récupérées
+- Rajouter les albums sur lesquels sont la track
+- Rajouter les artistes qui ont participés à la track

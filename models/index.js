@@ -25,9 +25,8 @@ db.Album = require('./album.model')(sequelize);
 db.Artist = require('./artist.model')(sequelize);
 db.Track = require('./track.model')(sequelize);
 db.MM_Artist_Track = require('./mm_artist_track.model')(sequelize);
-// -----------------------------------------------------------------
 db.User = require('./user.model')(sequelize);
-// -----------------------------------------------------------------
+
 
 
 // Définition des relations
@@ -47,11 +46,11 @@ db.Album.belongsToMany(db.Track, { through : 'MM_Album_Track' });
 db.Track.belongsToMany(db.Artist, { through : db.MM_Artist_Track});
 db.Artist.belongsToMany(db.Track, { through : db.MM_Artist_Track});
 
-// -------------------------------------------------------------------------------------
-// Many to many
+
+// Track <-> User (Many to many)
 db.User.belongsToMany(db.Track, { through : 'MM_User_Track' });
 db.Track.belongsToMany(db.User, { through : 'MM_User_Track' });
-// -------------------------------------------------------------------------------------
+
 
 
 // export de db

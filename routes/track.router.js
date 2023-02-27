@@ -11,4 +11,8 @@ trackRouter.route('/:id')
     .put(trackController.update)
     .delete(trackController.delete)
 
+
+// trackRouter.route('/Genre/:id')
+//     .get(trackController.getByGenre)
+
 module.exports = trackRouter;

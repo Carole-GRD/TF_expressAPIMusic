@@ -1,4 +1,4 @@
-// DTO -> Data Transformation Object
+// DTO -> Data Transfer Object
 // On passe souvent (essayer toujours (si c'est possible)) par un DTO pour 
 // Sécurité : Enlever des données à ne pas transmettre au front (ex, un password hashé)
 // Avoir plusieurs modèles différents à envoyer au front
