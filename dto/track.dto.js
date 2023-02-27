@@ -1,7 +1,8 @@
 const { AlbumDTO } = require("./album.dto");
+const { ArtistTrackDTO } = require("./artist.dto");
 
 class TrackDTO {
-    constructor({ id, title, duration, Genre, Albums }){
+    constructor({ id, title, duration, Genre, Albums, Artists }){
         this.id = id;
         this.title = title;
         this.duration = duration;
@@ -11,11 +12,13 @@ class TrackDTO {
 
         // TODO rajouter la liste des albums  
         // this.albums = Albums  
-        // ↑ Albums sera un tableau qui contiendra toutesles infos possibles en db sur albums
-        this.albums = Albums.map(album => new AlbumDTO(album));
+        // ↑ Albums sera un tableau qui contiendra toutes les infos possibles en db sur albums
+        this.albums = Albums ? Albums.map(album => new AlbumDTO(album)) : [];
         // ↑ albums sera un tableau qui ne contiendra que les infos prévues par notre AlbumDTO
-        
+
         // TODO rajouter la liste des artistes
+        // this.artists = Artists;
+        this.artists = Artists ? Artists.map(artist => new ArtistTrackDTO(artist)) : [];
     }
 }
 

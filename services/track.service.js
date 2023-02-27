@@ -14,11 +14,12 @@ const trackService = {
             // TODO rajout genre
             // include : Genre
             // TODO rajout albums
-            include : [ Genre, Album ]
             // TODO rajout artists
+            include : [ Genre, Album, Artist ]
+            // include : [ Genre, Album, { model : Artist, through : { attributes : ['feat'] } }]
         });
 
-        console.log(rows);
+        // console.log(rows);
 
         return {
             tracks : rows.map(track => new TrackDTO(track)),
@@ -31,7 +32,7 @@ const trackService = {
             // TODO rajout genre
             // TODO rajout albums
             // include : ['Genre', 'Album']
-            include : [ Genre, Album ]
+            include : [ Genre, Album, Artist ]
             // TODO rajout artists
         });
         return track ? new TrackDTO(track) : null;
@@ -49,9 +50,17 @@ const trackService = {
             const track = await db.Track.create(trackToAdd);
             // console.log("Track To Add : ", trackToAdd);
 
+            // #region Explication fonctions add autogénérées par Sequelize
+             // Sequelize, à partir des relations qu'on lui a renseignées et des models qu'on lui a fourni nous a créée 3 méthodes
+            // Album.addTrack()
+            // Artist.addTrack()
+            // Track.addAlbum()
+            // Track.addArtist()
+            // #endregion
 
             // TODO ajouter liens albums
             await track.addAlbum(trackToAdd.albums, { transaction });
+
             // #region Explication du ".albums "
             // ↑ la propriété ".albums" correspond à la propriété dans insomnia (voir track -> create -> json)
             // {
@@ -60,19 +69,13 @@ const trackService = {
             //     "GenreId": 1,
             //     "albums": [3]
             // }
-            // #endregion
-
-
-            // #region Explication fonctions add autogénérées par Sequelize
-            // Sequelize, à partir des relations qu'on lui a renseignées et des models qu'on lui a fourni nous a créée 3 méthodes
-            // Album.addTrack()
-            // Artist.addTrack()
-            // Track.addAlbum()
-            // Track.addArtist()
-            // #endregion
+            // #endregio
 
             // TODO ajouter liens artists
-
+            // Pour chacun des artists reçus
+            for (const artist of trackToAdd.artists) {
+                await track.addArtists(artist.id, { through : { feat : artist.feat } }, transaction);
+            }
             
             // Validation des modifications en DB
             await transaction.commit();
@@ -80,7 +83,7 @@ const trackService = {
             
             // Récupérer en db la track avec artists et albums
             const addedTrack = await db.Track.findByPk(track.id, {
-                include: [ Genre, Album ]
+                include: [ Genre, Album, Artist ]
             })
             // console.log("ADDED TRACK : ", addedTrack);
 
