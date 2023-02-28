@@ -2,13 +2,17 @@ const trackRouter = require('express').Router();
 const trackController = require('../controllers/track.controller');
 const pagination = require('../middlewares/pagination.middleware');
 
+const bodyValidator = require('../middlewares/body.validator');
+const {createTrackValidator, updateTrackValidator} = require('../validators/track.validator');
+
+
 trackRouter.route('/')
     .get(pagination( { defaultLimit : 10, maxLimit : 100  } ), trackController.getAll)
-    .post(trackController.create)
+    .post(bodyValidator(createTrackValidator), trackController.create)
 
 trackRouter.route('/:id')
     .get(trackController.getById)
-    .put(trackController.update)
+    .put(bodyValidator(updateTrackValidator), trackController.update)
     .delete(trackController.delete)
 
 
