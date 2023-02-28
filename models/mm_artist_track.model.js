@@ -12,7 +12,11 @@ module.exports = (sequelize) => {
        feat : {
         type : DataTypes.BOOLEAN,
         allowNull : false,
-        defaultValue : false
+        defaultValue : false,
+        validate : {
+            notNull : true,
+            isIn : [[true, false]]   
+        }
        }
     }, {
         tableName : 'MM_Artist_Track',

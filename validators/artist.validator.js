@@ -11,6 +11,7 @@ const yup = require('yup');
 // });
 
 const artistValidator = yup.object({
+    // firstname : yup.string().trim().max(100),
     firstname : yup.string().required().trim().max(100),
     lastname : yup.string().trim().max(50).nullable(),
     birthdate : yup.date().nullable(),
