@@ -2,9 +2,12 @@
 // Import de jsonwebtoken pour pouvoir utiliser la librairie et les méthodes associées
 const jsonwebtoken = require('jsonwebtoken');
 
+const { JWT_SECRET, JWT_ISSUER, JWT_AUDIENCE } = process.env;
+
 const jwt = {
     // Génération d'un token à partir des infos du user, d'options et d'un secret
     // fonction généralement appelée generate ou encode
+    // passer en paramètres {id, role} pour pouvoir insérer en argument tou le user (voir auth.controller, register et login) -> const token = await jwt.generate(user)
     generate : ({id, role}) => {
 
         // La génération du token pouvant potentiellement échouer, on va renvoyer une promesse lors de la génération pour gérer les erreurs
@@ -22,15 +25,13 @@ const jwt = {
                 // audience :  -> à qui est destiné le token (la ou les appli qui vont l'utiliser), peut être une chaine (si appli) : "AngularSpotify", un tableau (si plein d'appli) : ["AngularSpotify", "ILoveMusic"]
             // #endregion
             
-            const { JWT_SECRET, JWT_ISSUER, JWT_AUDIENCE } = process.env;
-
             const payload = { id, role };
     
             const secret = JWT_SECRET;
     
             const options = {
                 algorithm : 'HS512',  // 'HS256', 'HS384', 'HS512' (default HS512)
-                expressIn : '365d',   // https://github.com/vercel/ms
+                expiresIn : '365d',   // https://github.com/vercel/ms
                 issuer : JWT_ISSUER,
                 audience : JWT_AUDIENCE
             };
@@ -41,7 +42,7 @@ const jwt = {
                 if (error) {
                     reject(error);
                 }
-                
+
                 resolve(token);
             });
 
@@ -51,8 +52,34 @@ const jwt = {
 
     // Renvoie des infos du user (payload), à partir d'un token (décodé), d'options et d'un secret
     decode : (token) => {
-        const user = {};
-        return user;
+        
+        // -------------------------------------------
+        // // Plus besoin car géré par le middleware
+        // -------------
+        // // Si token est null ou undefined
+        // if (!token || token === '') {
+        //     return Promise.reject('No Token');
+        // }
+        // -------------------------------------------
+
+        // Si on a un token, on renvoie une promesse dans laquelle on promet de faire la vérification
+        return new Promise((resolve, reject) => {
+
+            const options = {
+                issuer : JWT_ISSUER,
+                audience : JWT_AUDIENCE
+            }
+            // verify(token, secret, header)
+            // en 4e paramètre, une méthode avec error, payload
+            jsonwebtoken.verify(token, JWT_SECRET, options, (error, payload) => {
+
+                if (error) {
+                    reject(error);
+                }
+                resolve(payload);
+            })
+        })
+
     }
 }
 
