@@ -2,7 +2,7 @@ const userRouter = require('express').Router();
 const userController = require('../controllers/user.controller');
 const pagination = require('../middlewares/pagination.middleware');
 
-// Middleware
+// Middlewares
 const bodyValidator = require('../middlewares/body.validator');
 const updateUserValidator = require('../validators/user.validator');
 const authJwt = require('../middlewares/auth.jwt.middleware');
@@ -12,7 +12,7 @@ userRouter.route('/')
 
 
 userRouter.route('/:id')
-    .get(authJwt(), userController.getById)
+    .get(authJwt(['Admin']), userController.getById)
     .put (bodyValidator(updateUserValidator) , userController.update)
     .delete(userController.delete)
 
