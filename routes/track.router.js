@@ -20,7 +20,11 @@ trackRouter.route('/:id')
     .delete(authJwt(['Admin']), trackController.delete)
 
 
-// trackRouter.route('/Genre/:id')
+trackRouter.route('/:id/like')      // .../api/track/4/like    -> où 4 est l'id de la track liké
+    .post(trackController.like)
+
+
+// trackRouter.route('/genre/:id')
 //     .get(trackController.getByGenre)
 
 module.exports = trackRouter;

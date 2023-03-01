@@ -87,6 +87,15 @@ const trackController = {
             return;
         }
         res.sendStatus(204);
+    },
+
+    /** 
+     * Like a Track
+     * @param { Request } req
+     * @param { Response } res
+     */
+    like : async (req, res) => {
+        res.sendStatus(501);
     }
 }
 

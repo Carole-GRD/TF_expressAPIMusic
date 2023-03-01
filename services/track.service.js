@@ -111,6 +111,10 @@ const trackService = {
             where : { id }
         });
         return nbDeleteRow === 1;
+    },
+
+    like : async (trackId, userId) {
+        
     }
 }
 

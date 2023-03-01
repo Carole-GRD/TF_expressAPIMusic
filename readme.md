@@ -134,4 +134,9 @@ ExpressAPIMusic
 - Création du token dans login et register (controller)
 - Mise en place du middleware qui va décoder le token (middleware + routes)
 
+
 ## Ajout du like des tracks par un user
+- Création d'une nouvelle track route
+- Création d'une méthode like dans trackController
+- Création d'une méthode like dans trackService
+- Y'a plus qu'à remplir ...
