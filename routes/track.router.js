@@ -4,16 +4,20 @@ const pagination = require('../middlewares/pagination.middleware');
 
 const bodyValidator = require('../middlewares/body.validator');
 const {createTrackValidator, updateTrackValidator} = require('../validators/track.validator');
+const authJwt = require('../middlewares/auth.jwt.middleware');
 
 
 trackRouter.route('/')
     .get(pagination( { defaultLimit : 10, maxLimit : 100  } ), trackController.getAll)
-    .post(bodyValidator(createTrackValidator), trackController.create)
+    // .post(bodyValidator(createTrackValidator), trackController.create)
+    .post(authJwt(['Admin']), bodyValidator(createTrackValidator), trackController.create)
 
 trackRouter.route('/:id')
     .get(trackController.getById)
-    .put(bodyValidator(updateTrackValidator), trackController.update)
-    .delete(trackController.delete)
+    // .put(bodyValidator(updateTrackValidator), trackController.update)
+    .put(authJwt(['Admin']), bodyValidator(updateTrackValidator), trackController.update)
+    // .delete(trackController.delete)
+    .delete(authJwt(['Admin']), trackController.delete)
 
 
 // trackRouter.route('/Genre/:id')

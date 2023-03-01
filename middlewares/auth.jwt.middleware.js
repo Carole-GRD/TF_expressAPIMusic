@@ -32,7 +32,7 @@ const authJwt = (roles) => {
             // on essaie de décoder le token
             const payload = await jwt.decode(token);
 
-            // TODO : Vérifier role
+            
             // Si on a reçu un tableau de roles, on doit vérifier le role de l'utilisateur connecté pour voir s'il est présent dans le tableau
             if (roles) {
                 // #region Explication pourquoi recherhe en db plutôt que sur payload.id
