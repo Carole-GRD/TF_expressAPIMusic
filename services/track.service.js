@@ -113,8 +113,22 @@ const trackService = {
         return nbDeleteRow === 1;
     },
 
-    like : async (trackId, userId) {
-        
+    like : async (trackId, userId) => {
+        try {
+            const track = await db.Track.findByPk(trackId);
+            const user = await db.User.findByPk(userId);
+            await track.addUser(user, { through : 'MM_User_Track' } );
+            const isLinked = await track.hasUser(user);
+            // console.log('isLinked : ', isLinked);
+            if (!isLinked) {
+                throw new Error('Linking failed');
+            }
+            return isLinked;
+        }
+        catch (err) {
+            console.error(err);
+            return false;
+        }
     }
 }
 

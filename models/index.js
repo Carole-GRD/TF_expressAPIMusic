@@ -37,6 +37,7 @@ db.Track.belongsTo(db.Genre);
 // A.belongsTo(B) indique une relation en A et B où la foreign key sera côté A
 
 // Track <-> Album(Many to Many)
+// En passant une chaîne à throughci-dessus, nous demandons à Sequelize de générer automatiquement un modèle nommé table de passage MM_Album_Track ( également appelée table de jonction), avec seulement deux colonnes : albumId et trackId. Une clé unique composite sera établie sur ces deux colonnes.
 db.Track.belongsToMany(db.Album, { through : 'MM_Album_Track' });
 db.Album.belongsToMany(db.Track, { through : 'MM_Album_Track' });
 // A.belongsToMany(B, { through : C }) indique une relation entre A et B via une table intermédiaire où on aura deux foreign key, renvoyant à A (et B)

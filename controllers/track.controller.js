@@ -95,7 +95,22 @@ const trackController = {
      * @param { Response } res
      */
     like : async (req, res) => {
-        res.sendStatus(501);
+        // res.sendStatus(501);
+
+        const trackId = parseInt(req.params.id);
+        const userId = req.user.id;
+        // console.log(trackId);
+        // console.log(userId);
+
+        const isLiked = await trackService.like(trackId, userId);
+
+        if (!isLiked) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.sendStatus(204);
+        
     }
 }
 
