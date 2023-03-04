@@ -22,9 +22,8 @@ trackRouter.route('/:id')
 
 trackRouter.route('/:id/like')      // .../api/track/4/like    -> où 4 est l'id de la track liké
     // .post(trackController.like)
-    // ------------------------------------
     .post(authJwt(), trackController.like)
-    // ------------------------------------
+
 
 
 // trackRouter.route('/genre/:id')

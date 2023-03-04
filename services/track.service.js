@@ -114,22 +114,45 @@ const trackService = {
     },
 
     like : async (trackId, userId) => {
+        
         try {
+
             const track = await db.Track.findByPk(trackId);
             const user = await db.User.findByPk(userId);
-            await track.addUser(user, { through : 'MM_User_Track' } );
-            const isLinked = await track.hasUser(user);
-            // console.log('isLinked : ', isLinked);
-            if (!isLinked) {
-                throw new Error('Linking failed');
+
+            const wasLiked = await track.hasUser(user);
+            console.log('wasLiked ? ', wasLiked);
+            
+            if (!wasLiked) {
+
+                const like = await track.addUser(user, { through : 'MM_User_Track' } );
+                console.log(like);      //  -> toutes les données du lien créé
+
+                const isLiked = await track.hasUser(user);
+                console.log('isLiked : ', isLiked);        // -> true
+
+                return isLiked;
             }
-            return isLinked;
+            
+            if (wasLiked) {
+
+                const unlike = await track.removeUser(user, { through : 'MM_User_Track' } );
+                console.log(unlike);    //  -> 1  (nombre de lignes affectées)
+
+                const isliked = await track.hasUser(user);
+                console.log('isliked : ', isliked);       // -> false
+
+                return !isliked;
+            }
+            
         }
         catch (err) {
             console.error(err);
             return false;
         }
+
     }
+    
 }
 
 module.exports = trackService;
