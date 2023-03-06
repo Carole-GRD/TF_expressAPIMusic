@@ -141,8 +141,12 @@ ExpressAPIMusic
 - Création d'une méthode like dans trackService
 - Ajout du lien track-user dans le service
 
+## Ajout du dislike
+- Etapes idem 'Ajout like'
+
 
 ## Ajout d'une vérif role + userId sur user/getById
+
 
 ## Mise en place de multer pour la gestion de fichiers
 

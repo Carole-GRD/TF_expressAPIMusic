@@ -131,7 +131,7 @@ const trackService = {
         }
         catch (err) {
             await transaction.rollback();
-            return null        
+            return null;        
         }
     },
 
@@ -164,6 +164,39 @@ const trackService = {
     //     }
     // },
     // ---------------------------------------------------------------------
+
+
+    dislike : async (trackId, userId) => {
+        
+        const transaction = await db.sequelize.transaction();
+
+        try {
+            const track = await db.Track.findByPk(trackId);
+            const user = await db.User.findByPk(userId);
+
+            const link = await user.hasTrack(track);
+            // const link = await track.hasUser(user);
+            console.log(link);
+            if (!link) {
+                await transaction.commit();
+                return null;
+            }
+
+            const nbRows = await user.removeTrack(track,  { transaction });
+            // const something = await user.removeTrack(track,  { transaction });
+            // console. log(something);
+            // await track.removeUser(user,  { transaction });
+
+            await transaction.commit();
+
+            return nbRows === 1;
+        }
+        catch (err) {
+            await transaction.rollback();
+            return null; 
+        }
+
+    },
 
     // ---------------------------------------------------------------------
     // getByLike : async (userId) => {

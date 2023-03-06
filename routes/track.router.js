@@ -37,6 +37,8 @@ trackRouter.route('/:id/like')      // .../api/track/4/like    -> où 4 est l'id
     .post(authJwt(), trackController.like)
 
 
+trackRouter.route('/:id/dislike')
+    .delete(authJwt(), trackController.dislike)
 
 
 

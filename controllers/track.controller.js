@@ -118,9 +118,24 @@ const trackController = {
         // Ajout du lien vers la track qui vient d'être likée dans la response
         res.location('/track/' + trackId);  
 
-        res.status(201).json(new SuccessResponse({ msg : 'Like succes' }, 201));
+        res.status(201).json(new SuccessResponse({ msg : 'Like success' }, 201));
         
     },
+
+    dislike : async (req,res) => {
+        // res.sendStatus(501);
+
+        const trackId = req.params.id;     
+        const userId = req.user.id;
+        const disLike = await trackService.dislike(trackId, userId);
+
+        if (!disLike) {
+            res.status(404).json(new ErrorResponse('TrackId or UserId not found or link is not present', 404));
+            return;
+        }
+
+        res.status(204).json(new SuccessResponse({ msg : 'Dislike success' }, 204));
+    }
 
     // ---------------------------------------------------------------------
     // getByLike : async (req, res) => {
