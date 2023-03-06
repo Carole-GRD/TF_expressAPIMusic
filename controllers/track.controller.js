@@ -138,15 +138,15 @@ const trackController = {
     },
 
     // ---------------------------------------------------------------------
-    // getByLike : async (req, res) => {
-    //     const userId = req.user.id;
-    //     console.log('User id : ', userId);
-    //     res.sendStatus(501);
-    //     const tracks = await trackService.getByLike(userId);
-    //     // console.log(tracks);
-    //     res.status(200).json(tracks);
-    //     // res.status(200).json(new SuccessArrayResponse(tracks, count));
-    // }
+    getByLike : async (req, res) => {
+        // res.sendStatus(501);
+        const userId = req.user.id;
+        console.log('User id : ', userId);
+        const { likedTracks, count} = await trackService.getByLike(userId);
+        // console.log(tracks);
+        // res.status(200).json(tracks);
+        res.status(200).json(new SuccessArrayResponse(likedTracks, count));
+    }
     // ---------------------------------------------------------------------
 
 

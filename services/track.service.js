@@ -69,7 +69,7 @@ const trackService = {
             //     "GenreId": 1,
             //     "albums": [3]
             // }
-            // #endregio
+            // #endregion
 
             // TODO ajouter liens artists
             // Pour chacun des artists reçus
@@ -136,36 +136,6 @@ const trackService = {
     },
 
 
-    // ---------------------------------------------------------------------
-    // like : async (trackId, userId) => {
-    //     try {
-    //         const track = await db.Track.findByPk(trackId);
-    //         const user = await db.User.findByPk(userId);
-    //         const wasLiked = await track.hasUser(user);
-    //         console.log('wasLiked ? ', wasLiked);
-    //         if (!wasLiked) {
-    //             const like = await track.addUser(user, { through : 'MM_User_Track' } );
-    //             console.log(like);      //  -> toutes les données du lien créé
-    //             const isLiked = await track.hasUser(user);
-    //             console.log('isLiked : ', isLiked);        // -> true
-    //             return isLiked;
-    //         }
-    //         if (wasLiked) {
-    //             const unlike = await track.removeUser(user, { through : 'MM_User_Track' } );
-    //             console.log(unlike);    //  -> 1  (nombre de lignes affectées)
-    //             const isliked = await track.hasUser(user);
-    //             console.log('isliked : ', isliked);       // -> false
-    //             return !isliked;
-    //         }      
-    //     }
-    //     catch (err) {
-    //         console.error(err);
-    //         return false;
-    //     }
-    // },
-    // ---------------------------------------------------------------------
-
-
     dislike : async (trackId, userId) => {
         
         const transaction = await db.sequelize.transaction();
@@ -199,21 +169,40 @@ const trackService = {
     },
 
     // ---------------------------------------------------------------------
-    // getByLike : async (userId) => {
-    //     const user = await db.User.findByPk(userId);
-    //     const tracks = await user.getTracks();
-    //     // console.log('Tracks likées : ', tracks);
-    //     // console.log('Track 1 : ', tracks[0]);
-    //     // console.log('Track 1 - title : ', tracks[0].title);
-    //     // console.log('Track 2 : ', tracks[1]);
-    //     // return tracks;  
-    //     const tracksTitle = tracks.forEach(track => {
-    //         track.title
-    //     });
-    //     console.log(tracksTitle);
+    getByLike : async (userId) => {
+        const transaction = await db.sequelize.transaction();
 
+        try {
+            const user = await db.User.findByPk(userId);
+            const tracks = await user.getTracks();
+            
+            const tracksId = tracks.map(track => track.id );
+            // console.log('trackdId : ', tracksId);
 
-    // }
+        
+            const { rows, count } = await db.Track.findAndCountAll({
+                where: {
+                    id: tracksId
+                }
+            });
+            
+            // console.log('rows : ', rows);
+         
+            
+            await transaction.commit();
+
+            return {
+                likedTracks : rows.map(likedTrack => new TrackDTO(likedTrack)),
+                count
+            }
+    
+        }
+        catch (err) {
+            await transaction.rollback();
+            return null; 
+        }
+
+    }
     // ---------------------------------------------------------------------
     
 }

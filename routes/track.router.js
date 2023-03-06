@@ -16,8 +16,8 @@ trackRouter.route('/')
 
 
 // ----------------------------------------------------
-// trackRouter.route('/like')
-    // .get(authJwt(), trackController.getByLike)
+trackRouter.route('/like')
+    .get(authJwt(), trackController.getByLike)
     // .get(trackController.getByLike)
     // .get((req, res) => { res.sendStatus(501); })
 // ----------------------------------------------------
