@@ -183,7 +183,9 @@ const trackService = {
             const { rows, count } = await db.Track.findAndCountAll({
                 where: {
                     id: tracksId
-                }
+                },
+                distinct : true,
+                include : [ Genre, Album, Artist ]
             });
             
             // console.log('rows : ', rows);
