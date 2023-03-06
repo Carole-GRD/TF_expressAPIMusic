@@ -56,6 +56,13 @@ module.exports = (sequelize) => {
                 notEmpty : true,
                 isIn : [['User', 'Admin']] 
             }
+        },
+        avatar : {
+            type : DataTypes.STRING,
+            allowNull : true,
+            validate : {
+                notEmpty : true,
+            }
         }
     }, {
         tableName : 'User'

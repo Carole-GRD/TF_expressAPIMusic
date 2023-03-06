@@ -81,7 +81,7 @@ const albumController = {
         const { id } = req.params;
 
         // console.log(req.body);  // Si on avait d'autres choses à modifier en plus de la cover -> body
-        console.log('controller file : ', req.file);  
+        // console.log('controller file : ', req.file);  
         // Dans file, nous avons toutes les données du fichier, avec son ancien nom (originalname) et le nouveau nom (filename)
         const filename = req.file.filename;
 

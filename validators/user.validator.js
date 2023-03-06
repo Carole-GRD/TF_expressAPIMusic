@@ -7,4 +7,9 @@ const updateUserValidator = yup.object({
     email : yup.string().required().trim().email()
 });
 
-module.exports = updateUserValidator;
+
+const updateAvatarValidator = yup.object({
+    avatar : yup.mixed()
+})
+
+module.exports = { updateUserValidator, updateAvatarValidator };

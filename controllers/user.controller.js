@@ -1,11 +1,11 @@
 const { Request, Response } = require('express');
 const userService = require('../services/user.service');
 const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
+const { ErrorResponse } = require('../utils/error.response');
 // ---------------------------------------------------
 // A SUPPRIMER -> VOIR AUTHENTICATION
 // -------------------------------
-const argon2 = require('argon2');
-const { ErrorResponse } = require('../utils/error.response');
+// const argon2 = require('argon2');
 // ---------------------------------------------------
 
 const userController = {
@@ -55,7 +55,7 @@ const userController = {
     },
 
     /**
-     * Udate
+     * Update
      * @param { Request } req
      * @param { Response } res
      */
@@ -68,6 +68,36 @@ const userController = {
             return;
         }
         res.sendStatus(204);
+    },
+
+    /**
+     * UpdateAvatar
+     * @param { Request } req 
+     * @param { Response } res 
+     */
+    updateAvatar : async (req, res) => {
+        // res.sendStatus(501);
+        const { id } = req.params;
+
+        const connectedUserRole = req.user.role;
+        const connectedUserId = req.user.id;
+
+        if (connectedUserRole !== 'Admin' && connectedUserId !== parseInt(id)) {
+            res.status(403).json(new ErrorResponse('Accès interdit, vous n\'êtes ni Admin, ni l\'utilisateur lié au profil',403));
+            return;
+        }
+        
+        const filename = req.file.filename;
+
+        const isUpdated = await userService.updateAvatar(id, filename);
+
+        if (!isUpdated) {
+            res.status(404).json(new ErrorResponse('User not found', 404));
+            return;
+        }
+
+        res.location = '/user/' + id;
+        res.status(204).json( new SuccessResponse({ msg : 'Avatar ajouté avec succès'}, 204));
     },
 
     /**

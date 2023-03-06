@@ -16,14 +16,14 @@ const authJwt = require('../middlewares/auth.jwt.middleware');
 // pour utiliser un middleware (route, middlewares, controller)
 genreRouter.route('/')
     .get(pagination( { defaultLimit : 30, maxLimit : 200 } ), genreController.getAll)
-    // .post(bodyValidator(genreValidator)  , genreController.create)
-    .post(authJwt(['Admin']), bodyValidator(genreValidator)  , genreController.create)
+    .post(bodyValidator(genreValidator)  , genreController.create)
+    // .post(authJwt(['Admin']), bodyValidator(genreValidator)  , genreController.create)
 
 genreRouter.route('/:id')
     .get(genreController.getById)
-    // .put(bodyValidator(genreValidator)  , genreController.update)
-    .put(authJwt(['Admin']), bodyValidator(genreValidator)  , genreController.update)
-    // .delete(genreController.delete)
-    .delete(authJwt(['Admin']), genreController.delete)
+    .put(bodyValidator(genreValidator)  , genreController.update)
+    // .put(authJwt(['Admin']), bodyValidator(genreValidator)  , genreController.update)
+    .delete(genreController.delete)
+    // .delete(authJwt(['Admin']), genreController.delete)
 
 module.exports = genreRouter;

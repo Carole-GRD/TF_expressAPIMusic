@@ -51,19 +51,19 @@ const uuid = require('uuid');
 
 albumRouter.route('/')
     .get(pagination(), albumController.getAll)
-    // .post(bodyValidator(albumValidator)  , albumController.create)
-    .post(authJwt(['Admin']), bodyValidator(albumValidator)  , albumController.create)
+    .post(bodyValidator(albumValidator)  , albumController.create)
+    // .post(authJwt(['Admin']), bodyValidator(albumValidator)  , albumController.create)
 
 
 albumRouter.route('/:id')
     .get(albumController.getById)
-    // .put(bodyValidator(albumValidator)  , albumController.update)
-    .put(authJwt(['Admin']), bodyValidator(albumValidator)  , albumController.update)
+    .put(bodyValidator(albumValidator)  , albumController.update)
+    // .put(authJwt(['Admin']), bodyValidator(albumValidator)  , albumController.update)
     // Attention la validation du body, doit toujours se faire avant le middleware multer
-    .patch(upload.single('cover'), albumController.updateCover)
-    // .patch(bodyValidator(albumCoverValidator), upload.single('cover'), albumController.updateCover)
-    // .delete(albumController.delete)
-    .delete(authJwt(['Admin']), albumController.delete)
+    // .patch(upload.single('cover'), albumController.updateCover)
+    .patch(bodyValidator(albumCoverValidator), upload.single('cover'), albumController.updateCover)
+    .delete(albumController.delete)
+    // .delete(authJwt(['Admin']), albumController.delete)
 
     
 
