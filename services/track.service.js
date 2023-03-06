@@ -202,8 +202,17 @@ const trackService = {
     // getByLike : async (userId) => {
     //     const user = await db.User.findByPk(userId);
     //     const tracks = await user.getTracks();
-    //     console.log(tracks);
+    //     // console.log('Tracks likées : ', tracks);
+    //     // console.log('Track 1 : ', tracks[0]);
+    //     // console.log('Track 1 - title : ', tracks[0].title);
+    //     // console.log('Track 2 : ', tracks[1]);
     //     // return tracks;  
+    //     const tracksTitle = tracks.forEach(track => {
+    //         track.title
+    //     });
+    //     console.log(tracksTitle);
+
+
     // }
     // ---------------------------------------------------------------------
     

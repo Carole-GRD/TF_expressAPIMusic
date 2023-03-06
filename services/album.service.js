@@ -34,6 +34,19 @@ const albumService = {
         return updatedRow[0] === 1;
     },
 
+    updateCover : async (id, filename) =>{
+        // On construit les données à modifier (doit correspondre au model Album)
+        const data = {
+            cover : `/images/covers/${filename}`
+        };
+        // On ne modifie que la cover, via son id
+        const updatedRow = await db.Album.update( data, {
+            where : { id }
+        } );
+        return updatedRow[0] === 1;
+
+    },
+
     delete : async (id) => {
         const nbDeleteRow = await db.Album.destroy({
             where : { id }

@@ -135,7 +135,7 @@ const trackController = {
         }
 
         res.status(204).json(new SuccessResponse({ msg : 'Dislike success' }, 204));
-    }
+    },
 
     // ---------------------------------------------------------------------
     // getByLike : async (req, res) => {

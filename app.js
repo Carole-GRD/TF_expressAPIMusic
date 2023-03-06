@@ -33,6 +33,7 @@ if (process.env.NODE_ENV === 'developement') {
 
 // Middleware app-lvl
 app.use(express.json());  // Permet d'utiliser du json enpost, put, patch (body en json)
+app.use(express.static('public'));  // permet de rendre le dossier public consultable sur le serveur
 
 
 // Router

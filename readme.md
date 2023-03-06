@@ -141,6 +141,7 @@ ExpressAPIMusic
 - Création d'une méthode like dans trackService
 - Ajout du lien track-user dans le service
 
+
 ## Ajout du dislike
 - Etapes idem 'Ajout like'
 
@@ -149,5 +150,14 @@ ExpressAPIMusic
 - Vérifier à partir du token si role = Admin
 - Si pas, vérifier à partir du token si l'id de la route = id de l'utilisateur qui fait la requête
 
-## Mise en place de multer pour la gestion de fichiers
 
+## Mise en place de multer pour la gestion de fichiers
+-rajouter le middleware static sur express
+- installer multer -> npm i multer
+- doc : https://www.npmjs.com/package/multer
+- Si on veut générer un uuid pour le nom de nos fichiers : installer uuid -> npm i uuid
+- doc : https://www.npmjs.com/package/uuid
+- Configuration de multer dans la(les) route(s) + utilisation du middleware
+- Récupération du fichier dans le controller
+- Mise en place de l'update cover dans le service
+- Ajout du body validator

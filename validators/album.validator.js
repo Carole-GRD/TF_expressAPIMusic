@@ -9,4 +9,8 @@ const albumValidator = yup.object({
 // nullable -> champ obligatoire mais peut être null
 // optional -> champ non obligatoire
 
-module.exports = albumValidator;
+const albumCoverValidator = yup.object({
+    cover : yup.mixed()/*.required('Image requise')*/
+})
+
+module.exports = { albumValidator, albumCoverValidator };

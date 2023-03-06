@@ -26,11 +26,11 @@ module.exports = (sequelize) => {
                 // Regex qui n'autorise que les path : '/monImage.png'
                 // is : /^(\/[^\/]+){0,2}\/?$/,
                 // PICACCESS : '../img' (voir fichier .env)   + cover : '/monImage.png'  
-                customValidator() {
-                    if (!this.cover.includes(this.title)) {
-                        throw new Error('Le titre doit être contenu dans le nom de la photo.');
-                    }
-                }
+                // customValidator() {
+                //     if (!this.cover.includes(this.title)) {
+                //         throw new Error('Le titre doit être contenu dans le nom de la photo.');
+                //     }
+                // }
             }
         }
     }, {
