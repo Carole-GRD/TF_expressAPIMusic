@@ -5,6 +5,7 @@ const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.resp
 // A SUPPRIMER -> VOIR AUTHENTICATION
 // -------------------------------
 const argon2 = require('argon2');
+const { ErrorResponse } = require('../utils/error.response');
 // ---------------------------------------------------
 
 const userController = {
@@ -33,6 +34,18 @@ const userController = {
      */
     getById : async (req, res) => {
         const { id } = req.params;
+
+        // Vérification sur les autorisations de l'utilisateur
+        // Le role Admin -> On va le chercher dans le token : req.user.role
+        // Les id -> dans le token : req.user.id
+        const connectedUserRole = req.user.role;
+        const connectedUserId = req.user.id;
+
+        if (connectedUserRole !== 'Admin' && connectedUserId !== parseInt(id)) {
+            res.status(403).json(new ErrorResponse('Accès interdit, vous n\'êtes ni Admin, ni l\'utilisateur lié au profil',403));
+            return;
+        }
+
         const user = await userService.getById(id);
         if (!user) {
             res.sendStatus(404);

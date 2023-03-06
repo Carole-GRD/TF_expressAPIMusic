@@ -146,7 +146,8 @@ ExpressAPIMusic
 
 
 ## Ajout d'une vérif role + userId sur user/getById
-
+- Vérifier à partir du token si role = Admin
+- Si pas, vérifier à partir du token si l'id de la route = id de l'utilisateur qui fait la requête
 
 ## Mise en place de multer pour la gestion de fichiers
 
