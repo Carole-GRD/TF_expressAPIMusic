@@ -9,8 +9,8 @@ const authJwt = require('../middlewares/auth.jwt.middleware');
 
 
 userRouter.route('/')
-    // .get(pagination(), userController.getAll)
-    .get(authJwt(), pagination(), userController.getAll)
+    .get(pagination(), userController.getAll)
+    // .get(authJwt(), pagination(), userController.getAll)
 
 
 userRouter.route('/:id')

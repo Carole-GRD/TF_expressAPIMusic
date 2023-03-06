@@ -1,5 +1,7 @@
 const { Request, Response } = require('express');
-const trackService = require('../services/track.service')
+const db = require('../models');
+const trackService = require('../services/track.service');
+const { ErrorResponse } = require('../utils/error.response');
 const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
 
 const trackController = {
@@ -97,21 +99,42 @@ const trackController = {
     like : async (req, res) => {
         // res.sendStatus(501);
 
-        const trackId = parseInt(req.params.id);
+        // const trackId = parseInt(req.params.id);   //  -> parseInt() pas indispensable
+        const trackId = req.params.id;     
+        // ↑ const { id } = req.params;  -> moins performant si req.params est un grand objet (avec beaucoup de données)
+
         const userId = req.user.id;
-        // console.log(trackId);
-        // console.log(userId);
+        // ↑ const { id } = req.user; 
+        console.log('trackId', trackId);
+        console.log('userId', userId);
 
-        const isLiked = await trackService.like(trackId, userId);
+        const like = await trackService.like(trackId, userId);
 
-        if (!isLiked) {
-            res.sendStatus(404);
+        if (!like) {
+            res.status(404).json(new ErrorResponse('TrackId or UserId not found', 404));
             return;
         }
 
-        res.sendStatus(204);
+        // Ajout du lien vers la track qui vient d'être likée dans la response
+        res.location('/track/' + trackId);  
+
+        res.status(201).json(new SuccessResponse({ msg : 'Like succes' }, 201));
         
-    }
+    },
+
+    // ---------------------------------------------------------------------
+    // getByLike : async (req, res) => {
+    //     const userId = req.user.id;
+    //     console.log('User id : ', userId);
+    //     res.sendStatus(501);
+    //     const tracks = await trackService.getByLike(userId);
+    //     // console.log(tracks);
+    //     res.status(200).json(tracks);
+    //     // res.status(200).json(new SuccessArrayResponse(tracks, count));
+    // }
+    // ---------------------------------------------------------------------
+
+
 }
 
 module.exports = trackController;

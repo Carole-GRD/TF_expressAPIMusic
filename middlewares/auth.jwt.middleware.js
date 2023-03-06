@@ -21,11 +21,14 @@ const authJwt = (roles) => {
             // console.log(req.headers);
             // console.log(bearerToken);
             // etpae 2 : Découper ce qu'on vient de récupérer pour n'obtenir que le token
-            const token = bearerToken.split(' ')[1];
+            // const token = bearerToken.split(' ')[1];
+            // console.log(bearerToken);
+            const token = bearerToken?.split(' ')[1];
+            // console.log(token);
 
             // Si pas de token -> l'utilisateur n'est pas connecté
             // On lui renvoie une erreur Unauthorized 401
-            if (!token || token === '') {
+            if (!token || token === '' || token === 'undefined') {
                 res.status(401).json(new ErrorResponse('Non autorisé : Vous devez être connecté', 401));
             }
             

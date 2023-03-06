@@ -113,45 +113,66 @@ const trackService = {
         return nbDeleteRow === 1;
     },
 
-    like : async (trackId, userId) => {
-        
-        try {
 
+    like : async (trackId, userId) => {
+        const transaction = await db.sequelize.transaction();
+
+        try {
             const track = await db.Track.findByPk(trackId);
             const user = await db.User.findByPk(userId);
 
-            const wasLiked = await track.hasUser(user);
-            console.log('wasLiked ? ', wasLiked);
-            
-            if (!wasLiked) {
+            const like = await track.addUser(user, { transaction });
+            // ↕ OU BIEN ...
+            // const like = await user.addTrack(track, { transaction });
 
-                const like = await track.addUser(user, { through : 'MM_User_Track' } );
-                console.log(like);      //  -> toutes les données du lien créé
+            await transaction.commit();
 
-                const isLiked = await track.hasUser(user);
-                console.log('isLiked : ', isLiked);        // -> true
-
-                return isLiked;
-            }
-            
-            if (wasLiked) {
-
-                const unlike = await track.removeUser(user, { through : 'MM_User_Track' } );
-                console.log(unlike);    //  -> 1  (nombre de lignes affectées)
-
-                const isliked = await track.hasUser(user);
-                console.log('isliked : ', isliked);       // -> false
-
-                return !isliked;
-            }
-            
+            return like;
         }
         catch (err) {
-            console.error(err);
-            return false;
+            await transaction.rollback();
+            return null        
         }
+    },
 
-    }
+
+    // ---------------------------------------------------------------------
+    // like : async (trackId, userId) => {
+    //     try {
+    //         const track = await db.Track.findByPk(trackId);
+    //         const user = await db.User.findByPk(userId);
+    //         const wasLiked = await track.hasUser(user);
+    //         console.log('wasLiked ? ', wasLiked);
+    //         if (!wasLiked) {
+    //             const like = await track.addUser(user, { through : 'MM_User_Track' } );
+    //             console.log(like);      //  -> toutes les données du lien créé
+    //             const isLiked = await track.hasUser(user);
+    //             console.log('isLiked : ', isLiked);        // -> true
+    //             return isLiked;
+    //         }
+    //         if (wasLiked) {
+    //             const unlike = await track.removeUser(user, { through : 'MM_User_Track' } );
+    //             console.log(unlike);    //  -> 1  (nombre de lignes affectées)
+    //             const isliked = await track.hasUser(user);
+    //             console.log('isliked : ', isliked);       // -> false
+    //             return !isliked;
+    //         }      
+    //     }
+    //     catch (err) {
+    //         console.error(err);
+    //         return false;
+    //     }
+    // },
+    // ---------------------------------------------------------------------
+
+    // ---------------------------------------------------------------------
+    // getByLike : async (userId) => {
+    //     const user = await db.User.findByPk(userId);
+    //     const tracks = await user.getTracks();
+    //     console.log(tracks);
+    //     // return tracks;  
+    // }
+    // ---------------------------------------------------------------------
     
 }
 

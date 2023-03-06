@@ -139,4 +139,10 @@ ExpressAPIMusic
 - Création d'une nouvelle track route
 - Création d'une méthode like dans trackController
 - Création d'une méthode like dans trackService
-- Y'a plus qu'à remplir ...
+- Ajout du lien track-user dans le service
+
+
+## Ajout d'une vérif role + userId sur user/getById
+
+## Mise en place de multer pour la gestion de fichiers
+

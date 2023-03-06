@@ -7,10 +7,22 @@ const {createTrackValidator, updateTrackValidator} = require('../validators/trac
 const authJwt = require('../middlewares/auth.jwt.middleware');
 
 
+
 trackRouter.route('/')
     .get(pagination( { defaultLimit : 10, maxLimit : 100  } ), trackController.getAll)
     // .post(bodyValidator(createTrackValidator), trackController.create)
     .post(authJwt(['Admin']), bodyValidator(createTrackValidator), trackController.create)
+
+
+
+// ----------------------------------------------------
+// trackRouter.route('/like')
+//     .get(authJwt(), trackController.getByLike)
+    // .get(trackController.getByLike)
+    // .get((req, res) => { res.sendStatus(501); })
+// ----------------------------------------------------
+
+
 
 trackRouter.route('/:id')
     .get(trackController.getById)
@@ -23,6 +35,9 @@ trackRouter.route('/:id')
 trackRouter.route('/:id/like')      // .../api/track/4/like    -> où 4 est l'id de la track liké
     // .post(trackController.like)
     .post(authJwt(), trackController.like)
+
+
+
 
 
 
