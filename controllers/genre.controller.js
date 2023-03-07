@@ -1,5 +1,6 @@
 const { Request, Response } = require('express');
 const genreService = require('../services/genre.service');
+const { ErrorResponse } = require('../utils/error.response');
 const { SuccessArrayResponse, SuccessResponse } = require('../utils/success.response');
 
 const genreController = {
@@ -71,6 +72,11 @@ const genreController = {
         console.log(req.body);
         // TODO -> Mettre en place un middleware qui valide ces données
 
+        const alreadyExists = await genreService.nameAlreadyExists(data.name);
+        if (alreadyExists) {
+            return res.status(409).json(new ErrorResponse('Le nom du genre existe déjà', 409))
+        }
+
         const genre = await genreService.create(data);
 
         // Onva aller modifier la response, pour ajouter le lien vers la requête sur le genre qui vient d'être crée (getById)
@@ -94,6 +100,11 @@ const genreController = {
 
         // Récupération du body
         const data = req.body;
+
+        const alreadyExists = await genreService.nameAlreadyExists(data.name);
+        if (alreadyExists) {
+            return res.status(409).json(new ErrorResponse('Le nom du genre existe déjà', 409))
+        }
 
         const isUpdated = await genreService.update(id, data);
 

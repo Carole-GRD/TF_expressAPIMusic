@@ -51,6 +51,11 @@ const genreService = {
             where : { id }
         });
         return nbDeleteRow === 1;  // Est-ce nb row supprimées = 1 ? si oui delete réussi (return true), si non delete raté (return false)
+    },
+
+    nameAlreadyExists : async (name) => {
+        const genre = await db.Genre.findOne({ where : { name }});
+        return genre ? true : false; 
     }
 }
 

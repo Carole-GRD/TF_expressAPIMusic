@@ -7,7 +7,7 @@ class SuccessResponse {
 
 class SuccessArrayResponse {
     constructor(data, count, code = 200) {
-        this.result = data;
+        this.results = data;
         this.count = count;
         this.statusCode = code;
     }
