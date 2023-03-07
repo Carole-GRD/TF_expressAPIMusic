@@ -1,12 +1,13 @@
 
 // Attention, onne veut jamais transmttre le password, il ne sera donc pas present
 class UserDTO {
-    constructor( { id, firstname, lastname, email, role } ) {
+    constructor( { id, firstname, lastname, email, role, avatar } ) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
+        this.avatar = avatar;
     }
 }
 

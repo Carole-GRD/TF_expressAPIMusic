@@ -77,7 +77,8 @@ const userController = {
      */
     updateAvatar : async (req, res) => {
         // res.sendStatus(501);
-        const { id } = req.params;
+        // const { id } = req.params;
+        const id = req.params.id;
 
         const connectedUserRole = req.user.role;
         const connectedUserId = req.user.id;
@@ -97,7 +98,7 @@ const userController = {
         }
 
         res.location = '/user/' + id;
-        res.status(204).json( new SuccessResponse({ msg : 'Avatar ajouté avec succès'}, 204));
+        res.status(204).json(new SuccessResponse({ msg : 'Avatar update success'}, 204));
     },
 
     /**

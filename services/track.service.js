@@ -194,6 +194,12 @@ const trackService = {
             await transaction.commit();
 
             return {
+                // likedTracks : rows.map(likedTrack => 
+                //     `Titre : ${likedTrack.title} - 
+                //     Artist : ${likedTrack.Artist.firstname} ${likedTrack.Artist.lastname} -
+                //     Album : ${likedTrack.Album.title} -
+                //     Cover : ${likedTrack.Album.cover} -
+                //     Genre : ${likedTrack.Genre.name}`),
                 likedTracks : rows.map(likedTrack => new TrackDTO(likedTrack)),
                 count
             }

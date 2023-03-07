@@ -34,7 +34,8 @@ const userService = {
         const updatedRow = await db.User.update(data, {
             where : { id }
         });
-        return updatedRow[0] === 1;
+        // Première case du tableau : nombre de lignes modifiées  (0 ou 1)
+        return updatedRow[0] === 1;  
     },
 
     delete : async (id) => {

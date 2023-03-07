@@ -7,11 +7,20 @@ require('dotenv').config();
 
 // Import d'express
 const express = require('express');
+
+// Import des cors
+const cors = require('cors');
+
+
 // Importdu middleware express-async-errors
 require('express-async-errors');
 
 // Créationdu serveur
 const app = express();
+
+
+// Utilisation des cors
+app.use(cors());
 
 
 // Import db
@@ -28,6 +37,9 @@ if (process.env.NODE_ENV === 'developement') {
 
     // db.sequelize.sync({ alter : { drop : false } });
     // ↑ regarde l'état actuel de la db, ajoute ce qui peut-être ajouté, modifie les colonnes, suppression de colonnes et/ou tables interdites
+    
+    // db.User.sync({ alter : { drop : false } });
+    // ↑ pour sunchro juste un model
 }
 
 

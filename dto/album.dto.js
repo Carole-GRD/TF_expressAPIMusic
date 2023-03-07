@@ -3,7 +3,7 @@ class AlbumDTO {
     constructor({ id, title, cover}){
         this.id = id;
         this.title = title;
-        this.cover = cover ?? null;  // Coalesce
+        this.cover = cover;
         // TODO rajouter la liste de toutes les tracks présentes sur l'album
     }
 }

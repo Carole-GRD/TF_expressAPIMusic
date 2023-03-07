@@ -161,3 +161,10 @@ ExpressAPIMusic
 - Récupération du fichier dans le controller
 - Mise en place de l'update cover dans le service
 - Ajout du body validator
+
+
+## Ajout d'un avatar à nos utilisateur 
+- Penser en plus à update user DTO puisqu'on n'avait pas prévu de renvoyer avatar
+
+## Ajout des cors
+https://www.npmjs.com/package/cors
